@@ -1,3 +1,6 @@
 node_modules/
 *.log
 .DS_Store
+
+# Project MCP config: carries a driver bearer token
+.mcp.json
