@@ -1,0 +1,13 @@
+{
+  "name": "claude-skills",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Versioned Claude Code skills and commands, plus the model-refresh loop that keeps them current.",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "guides": "node scripts/model-guides.mjs",
+    "guides:check": "node scripts/model-guides.mjs --dry-run --json"
+  },
+  "license": "UNLICENSED"
+}
