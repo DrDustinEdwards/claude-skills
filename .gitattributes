@@ -1,0 +1,4 @@
+# The fetched guides are an archive: keep the bytes that came off the wire, so a
+# checkout on any platform matches the hash in guides/_state.json.
+guides/*.md -text
+* text=auto
