@@ -1,6 +1,15 @@
 ---
 name: find-skills
 description: Helps users discover and install agent skills when they ask questions like "how do I do X", "find a skill for X", "is there a skill that can...", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.
+trigger: "the user asks how to do something that may already exist as an installable skill"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "a matching skill is installed, or its absence is reported"
+interface:
+  inputs: "a capability the user is looking for"
+  outputs: "a skill recommendation, or an install"
 ---
 
 # Find Skills

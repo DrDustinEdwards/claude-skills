@@ -1,6 +1,15 @@
 ---
 name: wrangler
 description: Run or troubleshoot Wrangler CLI commands and configure Worker projects for local development, deployment, and Cloudflare resource management.
+trigger: "running or troubleshooting a Wrangler CLI command, or configuring a Worker project for local development or deployment"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the wrangler command succeeds, or its failure is explained with the fix"
+interface:
+  inputs: "a Wrangler command or a project configuration task"
+  outputs: "correct wrangler invocations and project configuration"
 ---
 
 # Wrangler CLI
