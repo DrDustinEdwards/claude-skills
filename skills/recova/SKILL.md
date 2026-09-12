@@ -1,6 +1,15 @@
 ---
 name: recova
 description: Project-specific conventions for the Recova codebase. Encodes design tokens, auth helpers, cron pattern, and field-name gotchas so sessions start with correct context. Triggers on session start when working in the recova repo, when writing TSX with design tokens, when writing crons, or when touching the admin/blog area.
+trigger: "working in the Recova repo: design tokens, auth helpers, crons, or the admin and blog area"
+namespaces: ["foxhound"]
+version: 1.0.0
+status: live
+source: human
+termination: "the change uses the repo's tokens, helpers, and field names, and its checks pass"
+interface:
+  inputs: "a Recova task and the files it touches"
+  outputs: "code that matches the repo's conventions"
 ---
 
 # Recova Project Skill

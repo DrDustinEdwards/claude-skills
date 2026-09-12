@@ -1,6 +1,15 @@
 ---
 name: web-perf
 description: Audit, diagnose, or optimize website loading and interaction performance, Core Web Vitals, and Lighthouse performance scores.
+trigger: "auditing or optimizing page load, Core Web Vitals, or a Lighthouse performance score"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the metrics are measured and each regression is named with its cause"
+interface:
+  inputs: "a URL or local app to profile"
+  outputs: "measured Core Web Vitals and a prioritized list of fixes"
 ---
 
 # Web Performance Audit

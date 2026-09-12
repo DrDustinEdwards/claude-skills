@@ -1,6 +1,15 @@
 ---
 name: cloudflare-one-migrations
 description: Assess and plan migrations from existing VPN, SWG, or SASE platforms to Cloudflare One, including policy mapping, parity gaps, and rollout.
+trigger: "planning a migration from an existing VPN, SWG, or SASE platform to Cloudflare One"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "policies are mapped, parity gaps are named, and a rollout order exists"
+interface:
+  inputs: "the incumbent platform's policy export or description"
+  outputs: "a policy mapping, a parity gap list, and a rollout plan"
 ---
 
 # Cloudflare One Migrations

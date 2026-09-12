@@ -1,6 +1,15 @@
 ---
 name: dustin-workflow
 description: Personal workflow rules for Dustin's dev environment. Triggers on session start, env var work, deploy verification, Capsid task files, user-facing copy, and architectural decisions. Applies to every project in the portfolio.
+trigger: "any session in this portfolio: PowerShell commands, secrets, Capsid task documents, deploy verification, user-facing copy, or an architectural decision"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the session's work is verified by the rule that governs it: a green deploy, a read task document, or a surfaced decision"
+interface:
+  inputs: "the session's task and the repo it runs in"
+  outputs: "work that satisfies the portfolio's standing rules"
 ---
 
 # dustin-workflow

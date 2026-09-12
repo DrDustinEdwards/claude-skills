@@ -1,6 +1,15 @@
 ---
 name: durable-objects
 description: Build, debug, or review Cloudflare Durable Objects code for persistent state and coordination.
+trigger: "building, debugging, or reviewing Cloudflare Durable Objects for persistent state or coordination"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the Durable Object builds, its wrangler configuration is correct, and its tests pass"
+interface:
+  inputs: "a stateful coordination requirement, or Durable Object code under review"
+  outputs: "Durable Object code, wrangler configuration, and Vitest coverage"
 ---
 
 # Durable Objects

@@ -1,6 +1,15 @@
 ---
 name: sandbox-stable
 description: Build or maintain Cloudflare Sandbox apps on the stable @cloudflare/sandbox package. Use sandbox-next for preview apps and sandbox-migrate-to-next for stable-to-preview migrations.
+trigger: "building or maintaining a Cloudflare Sandbox app on the stable @cloudflare/sandbox package"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the sandbox runs the requested code and its preview URL responds"
+interface:
+  inputs: "a sandboxed execution requirement"
+  outputs: "Sandbox SDK code on the stable package"
 ---
 
 # Sandbox SDK — stable package

@@ -1,6 +1,15 @@
 ---
 name: cloudflare-one
 description: Design, configure, troubleshoot, or review Cloudflare One Zero Trust and SASE deployments. Use cloudflare-one-migrations for migration planning from other vendors.
+trigger: "designing, configuring, troubleshooting, or reviewing a Cloudflare One Zero Trust or SASE deployment"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the policy set is written and reviewed against the stated access requirements"
+interface:
+  inputs: "access requirements and the current network posture"
+  outputs: "Cloudflare One policies and configuration"
 ---
 
 # Cloudflare One

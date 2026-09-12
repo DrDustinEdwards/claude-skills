@@ -1,6 +1,15 @@
 ---
 name: agents-sdk
 description: Build, debug, or review Cloudflare Agents SDK applications using the agents package.
+trigger: "building, debugging, or reviewing a Cloudflare Agents SDK application that uses the agents package"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the agent code builds and its behaviour matches the SDK reference the skill cites"
+interface:
+  inputs: "an Agents SDK task, or agent code under review"
+  outputs: "agent code, or a review against the SDK reference"
 ---
 
 # Cloudflare Agents SDK
