@@ -1,6 +1,15 @@
 ---
 name: model-refresh
 description: Rewrites model-facing lines in this repo's skills and commands to match a named model's prompting guide. Use when a guide in guides/ has changed, when a new model appears, or when asked to refresh the skills for a model. Rewrites calibration only; it never edits a gate, a ruling, or task content.
+trigger: "a prompting guide in guides/ changed, a new model appeared, or a refresh of the skills for a named model is requested"
+namespaces: ["claude-skills"]
+version: 1.0.0
+status: live
+source: human
+termination: "a pull request carries the rewritten calibration lines, or the run reports that no line was in scope"
+interface:
+  inputs: "a model name and its fetched guide in guides/"
+  outputs: "a pull request rewriting model-facing lines in MANIFEST.json's owned files"
 ---
 
 # model-refresh

@@ -1,6 +1,15 @@
 ---
 name: foxing
 description: Project-specific conventions for the Foxing monorepo (apps/web Next.js + apps/mobile Expo). Encodes journal import boundaries, the Card variant system, font/token names, storage rules, Supabase access patterns, and platform-specific icon/styling rules. Load when working in apps/web or apps/mobile, when writing TSX with design tokens, when touching journal admin or public routes, when migrating the DB, or when uploading cover assets.
+trigger: "working in the Foxing monorepo: apps/web, apps/mobile, design tokens, journal routes, database migrations, or cover assets"
+namespaces: ["foxing"]
+version: 1.0.0
+status: live
+source: human
+termination: "the change respects the monorepo's import boundaries and token names, and its checks pass"
+interface:
+  inputs: "a Foxing task and the files it touches"
+  outputs: "code that matches the monorepo's conventions"
 ---
 
 # foxing

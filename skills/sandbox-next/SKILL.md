@@ -1,6 +1,15 @@
 ---
 name: sandbox-next
 description: Build or maintain Cloudflare Sandbox apps on @cloudflare/sandbox@next (SDK 1.0 preview). Use sandbox-migrate-to-next when porting a stable app.
+trigger: "building or maintaining a Cloudflare Sandbox app on the @cloudflare/sandbox@next preview"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the sandbox runs the requested code and its preview URL responds"
+interface:
+  inputs: "a sandboxed execution requirement"
+  outputs: "Sandbox SDK code on the preview package"
 ---
 
 # Sandbox SDK — `@next` (1.0 preview)

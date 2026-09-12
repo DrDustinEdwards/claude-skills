@@ -1,6 +1,15 @@
 ---
 name: cloudflare
 description: Discover and choose Cloudflare products for apps, APIs, AI agents, storage, networking, and security. Use for architecture and product selection, including when the user describes a need without naming a Cloudflare product; then find the relevant skill or documentation.
+trigger: "choosing Cloudflare products or designing an architecture on Cloudflare, including when the need is described without naming a product"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "a product choice is named and the follow-on skill or documentation page is identified"
+interface:
+  inputs: "a described need or an architecture question"
+  outputs: "a product recommendation and a pointer to the skill or docs that implement it"
 ---
 
 # Discover and build with Cloudflare

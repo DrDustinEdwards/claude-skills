@@ -2,6 +2,15 @@
 name: karpathy-guidelines
 description: Behavioral guidelines to reduce common LLM coding mistakes. Use when writing, reviewing, or refactoring code to avoid overcomplication, make surgical changes, surface assumptions, and define verifiable success criteria.
 license: MIT
+trigger: "writing, reviewing, or refactoring code where overcomplication or an unsurfaced assumption is the risk"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the change is surgical, its assumptions are stated, and its success criteria are verifiable"
+interface:
+  inputs: "code being written or reviewed"
+  outputs: "a surgical change with stated assumptions and success criteria"
 ---
 
 # Karpathy Guidelines
