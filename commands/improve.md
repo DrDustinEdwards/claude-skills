@@ -20,11 +20,22 @@ The subscription-mode driver for Capsid's self-improvement loop. In subscription
 
 The loop targets each namespace's PRIMARY repo. Its local clone:
 
+- `project-a`           -> `C:\work\project-a`
 - `capsid`        -> `C:\work\capsid-mcp`
+- `claude-skills` -> `C:\work\claude-skills`
 - `dustinedwards` -> `C:\work\dustinedwards-info`
 - `project-b`      -> `C:\work\project-b`
 - `foxing`        -> `C:\work\foxing`
 - `project-c`     -> `C:\work\project-c`
+- `project-d`  -> `C:\work\project-d-info`
+- `project-e`         -> `C:\work\project-e`
+
+Every namespace the `namespaces` tool registers is listed here, which is not the
+same as saying every one can be worked. A row is an address, never a permission:
+what decides is the key file check below, and several of these rows have no key
+on this machine yet. Listing them anyway is the point, because a namespace
+missing from the map reads as one that does not exist rather than one nobody has
+provisioned.
 
 ## THE DRIVER IS AN AGENT, AND ITS CREDENTIAL IS PER NAMESPACE
 
