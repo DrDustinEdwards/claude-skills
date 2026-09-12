@@ -1,6 +1,15 @@
 ---
 name: design-taste-frontend
 description: Anti-slop frontend skill for landing pages, portfolios, and redesigns. The agent reads the brief, infers the right design direction, and ships interfaces that do not look templated. Real design systems when applicable, audit-first on redesigns, strict pre-flight check.
+trigger: "a landing page, portfolio, or frontend redesign that must not read as templated"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the skill's pre-flight check passes against the shipped interface"
+interface:
+  inputs: "a design brief, or an existing interface to audit first"
+  outputs: "frontend code and the design direction it commits to"
 ---
 
 # tasteskill: Anti-Slop Frontend Skill

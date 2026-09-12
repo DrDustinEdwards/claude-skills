@@ -1,6 +1,15 @@
 ---
 name: skill-creator
 description: Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy.
+trigger: "creating, editing, or evaluating a skill, or tuning a skill's description so it triggers accurately"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the skill validates and its evals run with their variance reported"
+interface:
+  inputs: "a capability to package as a skill, or an existing skill to improve"
+  outputs: "a skill directory and its eval results"
 ---
 
 # Skill Creator
