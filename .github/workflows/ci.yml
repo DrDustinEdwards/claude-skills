@@ -1,0 +1,31 @@
+# The files in this repo are loaded by Claude Code and acted on, so a change here
+# is a behavior change. This is the check that stands between a malformed skill
+# and the sessions that would load it.
+#
+# There are no dependencies and no lockfile on purpose: the tests use node --test
+# and touch no network, so there is nothing to install and nothing to pin.
+name: ci
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate the skill package format
+        run: npm run validate
+
+      - name: Test
+        run: npm test
