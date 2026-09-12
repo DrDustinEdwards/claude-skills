@@ -1,6 +1,15 @@
 ---
 name: workers-best-practices
 description: Cloudflare Workers best practices for production applications. Use when writing, reviewing, or configuring Workers.
+trigger: "writing, reviewing, or configuring a Cloudflare Worker for production, including wrangler.jsonc"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the Worker is checked against every anti-pattern the skill enumerates"
+interface:
+  inputs: "Worker code or wrangler configuration"
+  outputs: "a reviewed Worker and its configuration"
 ---
 
 Your knowledge of Cloudflare Workers APIs, types, and configuration may be outdated. **Prefer retrieval over pre-training** when writing or reviewing Workers code.

@@ -1,6 +1,15 @@
 ---
 name: cloudflare-email-service
 description: Implement or troubleshoot Cloudflare Email Sending and Email Routing integrations and their delivery configuration.
+trigger: "implementing or troubleshooting Cloudflare Email Sending or Email Routing, including SPF, DKIM, and DMARC"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "the email path sends or routes, and its bindings and DNS records are verified"
+interface:
+  inputs: "an email sending or routing requirement"
+  outputs: "Worker bindings, DNS records, and sending code"
 ---
 
 # Cloudflare Email Service
