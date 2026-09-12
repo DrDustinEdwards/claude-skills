@@ -1,6 +1,15 @@
 ---
 description: Drive the Capsid self-improvement loop's subscription-mode runs, work the job queue, or control the loop (off/on/pause/unpause).
 argument-hint: "[work | off | on | pause <ns> | unpause <ns>]"
+trigger: "driving the Capsid improve loop's subscription runs, working the job queue, or controlling the loop with off, on, pause, or unpause"
+namespaces: ["*"]
+version: 1.0.0
+status: live
+source: human
+termination: "one table is printed, and every claimed job has reached complete, fail, or block"
+interface:
+  inputs: "an argument: work, off, on, pause <ns>, unpause <ns>, or none"
+  outputs: "one table of the namespace's attempts or its job outcome"
 ---
 
 # /improve
