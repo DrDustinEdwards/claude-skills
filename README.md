@@ -26,6 +26,7 @@ guides/<model>.md             fetched vendor prompting guides, one per model
 guides/_state.json            per-guide url, sha256, fetched_at, changed_at
 scripts/model-guides.mjs      fetches the guides, reports which changed
 scripts/line-scope.mjs        the refusal rules of model-refresh, as testable code
+scripts/block-command.mjs     the command shape /improve step 4b self-approves, as testable code
 scripts/validate-skills.mjs   refuses a skill missing an L1 field
 MANIFEST.json                 which files model-refresh may rewrite, and what is vendored
 test/                         node --test, no network, no secrets
