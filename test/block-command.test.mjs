@@ -64,3 +64,13 @@ test('the skill tells the driver to block without a cd segment and resume on the
   assert.match(SKILL, /^- \*\*Never merge\.\*\*/m, 'merges stay with the seat');
   assert.match(SKILL, /A push to `master` or `main`, a force push, a migration, a deploy, a secret, a workflow file and a merge still end in step 5's `block`/);
 });
+
+// Every driver but capsid's is scoped to its own namespace, so the version has to
+// come from a call the driver can actually make. Measured 2026-09-18: reading
+// capsid/policy/gates.md as agent:claude-skills-driver is refused as out of scope,
+// while improve_status for its own namespace serves policies.gates.version.
+test('the skill takes the gates version from improve_status, not from the capsid document', () => {
+  assert.doesNotMatch(SKILL, /`read` `capsid\/policy\/gates\.md`/);
+  assert.match(SKILL, /Call `improve_status` with `namespace: <ns>` and read `policies\.gates`/);
+  assert.match(SKILL, /reports a `reason` in place of a version, or its `enabled` is false/);
+});
