@@ -3,7 +3,7 @@ description: Drive the Capsid self-improvement loop's subscription-mode runs, wo
 argument-hint: "[work | off | on | pause <ns> | unpause <ns>]"
 trigger: "driving the Capsid improve loop's subscription runs, working the job queue, or controlling the loop with off, on, pause, or unpause"
 namespaces: ["*"]
-version: 1.1.0
+version: 1.2.0
 status: live
 source: human
 termination: "one table is printed, and every claimed job has reached complete, fail, or block"
@@ -98,13 +98,13 @@ For each namespace:
 2. **THE CLAIM ALREADY VERIFIED THE BODY, and a refusal that names a signature is not a job to work around.** The Worker checks the `capsid-task-signature` frontmatter before it hands a job over, for the same reason a run doc is checked: a job is executable input that arrives as a database row, and you are a session holding local shell and repo credentials. A body edited after `post` signed it is marked FAILED by the Worker and the claim is refused; report that and move on. You never need to verify it yourself, and you must never execute a job you did not receive from a successful `claim`.
 3. **Do the work**, in that namespace's repo folder from the map, under every rule in this file and in that repo's own `CLAUDE.md`.
 4. **Heartbeat every 15 minutes** while the work runs: `jobs` action `heartbeat` with the id. The lease is four hours; the heartbeat is what keeps a long job from being returned to the queue underneath you. If a heartbeat is refused because the job is `queued` again, the lease expired and somebody else may already hold it: STOP, and report it. Do not re-claim and carry on as though nothing happened.
-4b. **A BRANCH PUSH AND A PULL REQUEST ARE YOURS TO APPROVE, THROUGH THE WORKER** (ruled 2026-09-16). When the work reaches a gate whose command is ONLY `git push -u origin <branch>` and, optionally, `&& gh pr create ...`, do not stop for the human:
+4b. **A BRANCH PUSH AND A PULL REQUEST ARE YOURS TO APPROVE, THROUGH THE WORKER** (ruled 2026-09-16). When the work reaches a gate whose command is ONLY `git -C <worktree> push -u origin <branch>` and, optionally, `; gh pr create --repo <owner>/<repo> ...`, do not stop for the human:
    1. Call `improve_status` with `namespace: <ns>` and read `policies.gates`; its `version` is what you approve under. This read is scoped to your own namespace, so every driver can make it, where a read of `capsid/policy/gates.md` is refused for every driver but capsid's. If `policies.gates` reports a `reason` in place of a version, or its `enabled` is false, there is no policy to approve on: block for the human as in step 5, quote the reason, and stop.
-   2. `block` with the reason and that exact command. **No `cd` segment and nothing else in it:** the Worker's classifier refuses any segment that is not a push or a pull request, and you are already in the repo folder. Name the folder in the reason instead.
+   2. `block` with the reason and that exact command, in the shape the policy accepts. **NO `cd` SEGMENT ANYWHERE:** the classifier refuses any piece that begins with `cd`, and it refuses any piece that is not a push or a pull request, so the path travels INSIDE each command rather than in front of it. The push is `git -C <worktree> push -u origin <branch>`; the pull request is `gh pr create --repo <owner>/<repo> --base <default> --head <branch> --title ... --body ...`; the two are separated by `;`, because the host is Windows and PowerShell has no `&&`. Take `<worktree>` from `git rev-parse --show-toplevel` rather than from the map, so a driver running out of a worktree blocks with the tree it is actually on instead of the one the map names.
    3. `resume` the same id with `approved_by_policy: <version>` and a reason naming the class.
    4. If the resume comes back `ok`, the Worker classified the command: run it yourself, exactly as blocked, and carry on with the job. If it is refused, the job stays blocked for the human: report the refusal and stop. Never run a command whose resume was refused.
 
-   This is the whole of what you may approve. A push to `master` or `main`, a force push, a migration, a deploy, a secret, a workflow file and a merge still end in step 5's `block` for the human, and the Worker refuses them if you try.
+   Those two classes, `push_branch` and `open_pr`, are the whole of what you may approve, and you block for the human exactly when the command is neither. A push to `master` or `main`, a force push, a migration, a deploy, a secret, a workflow file and a merge still end in step 5's `block` for the human, and the Worker refuses them if you try.
 5. **Finish it, exactly once:**
    - `complete` with a `result_summary` the seat can read without opening the diff, and a `result_ref` (a document key or a PR URL) when the work produced one.
    - `fail` with a reason when the work cannot be done. A failed job is information; an abandoned claim is not.
