@@ -18,8 +18,19 @@ const PUSH_NEVER = [/^--force/, /^-f$/, /^\+/, /^--delete$/, /^-d$/, /^--mirror$
 
 function classifySegment(segment) {
   const words = segment.split(/\s+/).filter(Boolean);
-  if (words[0] === 'git' && words[1] === 'push') {
-    const args = words.slice(2);
+  if (words[0] === 'git') {
+    // `git -C <worktree> push ...` is the policy's push form: the tree travels
+    // inside the command, so a driver on a worktree never needs the `cd` prefix
+    // that makes the whole command the human's.
+    let verb = 1;
+    if (words[verb] === '-C') {
+      if (!words[verb + 1]) return { ok: false, reason: `"${segment}" is git -C with no path` };
+      verb += 2;
+    }
+    if (words[verb] !== 'push') {
+      return { ok: false, reason: `"${segment}" matches no class a driver may approve` };
+    }
+    const args = words.slice(verb + 1);
     if (args.some((a) => PUSH_NEVER.some((p) => p.test(a)))) {
       return { ok: false, reason: `"${segment}" is a force, delete or refspec push` };
     }
