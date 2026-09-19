@@ -9,16 +9,26 @@ import { classifyBlockCommand } from '../scripts/block-command.mjs';
 const REPO = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SKILL = readFileSync(join(REPO, 'commands', 'improve.md'), 'utf8');
 
-// The pair the job asks for, shaped like the two commands in capsid PR #59:
-// the same push and pull request, once with the 2026-09-15 `cd` prefix.
+// The pair the job asks for, in the shape gates.md v3 accepts: the tree rides in
+// `git -C` and the repo in `--repo`, so neither command depends on a cwd, and the
+// two are separated by `;` because the host is Windows.
+const WORKTREE = 'C:\\Users\\email\\dev\\claude-skills';
 const WITHOUT_CD =
-  'git push -u origin job/improve-driver-policy-approval && gh pr create --base master --head job/improve-driver-policy-approval --title "Self-approve branch pushes"';
-const WITH_CD = `cd C:\\Users\\email\\dev\\claude-skills; ${WITHOUT_CD}`;
+  `git -C ${WORKTREE} push -u origin job/improve-driver-policy-approval; gh pr create --repo DrDustinEdwards/claude-skills --base master --head job/improve-driver-policy-approval --title "Self-approve branch pushes"`;
+const WITH_CD = `cd ${WORKTREE}; ${WITHOUT_CD}`;
 
 test('a block command without cd is self-approvable', () => {
   const v = classifyBlockCommand(WITHOUT_CD);
   assert.equal(v.selfApprovable, true, v.reason);
   assert.deepEqual(v.classes, ['push_branch', 'open_pr']);
+});
+
+// The colon in a Windows drive letter must not read as a refspec, which it would
+// if the -C path were left in the push's arguments.
+test('a -C worktree path does not read as a refspec', () => {
+  const v = classifyBlockCommand(`git -C ${WORKTREE} push -u origin fix/x`);
+  assert.equal(v.selfApprovable, true, v.reason);
+  assert.deepEqual(v.classes, ['push_branch']);
 });
 
 test('the same command with a cd segment is not', () => {
@@ -48,6 +58,10 @@ test('the never list stays with the human', () => {
     'git push -u origin fix/x && git push -u origin fix/y',
     'git push -u origin $(git branch --show-current)',
     'git push -u origin fix/x | tee out.txt',
+    'git -C C:\\Users\\email\\dev\\claude-skills push -u origin master',
+    'git -C C:\\Users\\email\\dev\\claude-skills push --force -u origin fix/x',
+    'git -C C:\\Users\\email\\dev\\claude-skills status',
+    'git -C',
     '',
   ]) {
     assert.equal(classifyBlockCommand(command).selfApprovable, false, command);
@@ -58,8 +72,17 @@ test('the never list stays with the human', () => {
 // file the driver loads rather than a copy of the sentence.
 test('the skill tells the driver to block without a cd segment and resume on the policy', () => {
   assert.match(SKILL, /^4b\. \*\*A BRANCH PUSH AND A PULL REQUEST ARE YOURS TO APPROVE/m);
-  assert.match(SKILL, /\*\*No `cd` segment and nothing else in it:\*\*/);
+  assert.match(SKILL, /\*\*NO `cd` SEGMENT ANYWHERE:\*\*/);
+  assert.match(SKILL, /The push is `git -C <worktree> push -u origin <branch>`/);
+  assert.match(SKILL, /`gh pr create --repo <owner>\/<repo> --base <default> --head <branch>/);
+  assert.match(SKILL, /separated by `;`/, 'the host is Windows');
+  assert.doesNotMatch(SKILL, /`&& gh pr create/, 'no && separator survives in a block command');
   assert.match(SKILL, /`approved_by_policy: <version>`/);
+  assert.match(
+    SKILL,
+    /`push_branch` and `open_pr`, are the whole of what you may approve, and you block for the human exactly when the command is neither/,
+    'self-approval is the two classes, and only the rest goes to a human',
+  );
   assert.match(SKILL, /Never run a command whose resume was refused\./);
   assert.match(SKILL, /^- \*\*Never merge\.\*\*/m, 'merges stay with the seat');
   assert.match(SKILL, /A push to `master` or `main`, a force push, a migration, a deploy, a secret, a workflow file and a merge still end in step 5's `block`/);
