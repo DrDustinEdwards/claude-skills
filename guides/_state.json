@@ -1,25 +1,18 @@
 {
-  "fetched_at": "2026-09-11T06:20:18.046Z",
-  "overview_sha256": "b2ae292320b5d068b20c426e6e4e0333d1a11e25c8457748ca39de25de283c27",
+  "fetched_at": "2026-09-23T08:29:20.162Z",
+  "overview_sha256": "02ebe565bc995c5a251fa578699ea048371cdcc2632b0c4d91541bab0e5c2605",
   "models": {
     "fable-5-1": {
       "status": 200,
       "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1.md",
-      "sha256": "4aa645dd26fe9efebdaaff7462563bfac1f27782ce2d71dd5afffeaf02a80c62",
-      "fetched_at": "2026-09-11T06:20:06.344Z",
-      "changed_at": "2026-09-11T06:20:06.344Z"
+      "sha256": "a9bb027ffcac9ec0291660c2c1a6334f128927f6d83cbac121f9a24c5e2cc0f9",
+      "fetched_at": "2026-09-23T08:29:20.162Z",
+      "changed_at": "2026-09-23T08:29:20.162Z"
     },
     "haiku-4-5": {
       "status": 404,
       "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-haiku-4-5.md",
-      "fetched_at": "2026-09-11T06:20:18.046Z"
-    },
-    "opus-5": {
-      "status": 200,
-      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5.md",
-      "sha256": "65be3e0b437cbe23cc41bb4f9b7a5031c5a71cd49ab91ec4d19c62738762b086",
-      "fetched_at": "2026-09-11T06:20:06.344Z",
-      "changed_at": "2026-09-11T06:20:06.344Z"
+      "fetched_at": "2026-09-23T08:29:20.162Z"
     },
     "opus-5-5": {
       "status": 200,
