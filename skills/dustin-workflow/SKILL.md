@@ -3,7 +3,7 @@ name: dustin-workflow
 description: Personal workflow rules for Dustin's dev environment. Triggers on session start, env var work, deploy verification, Capsid task files, user-facing copy, and architectural decisions. Applies to every project in the portfolio.
 trigger: "any session in this portfolio: PowerShell commands, secrets, Capsid task documents, deploy verification, user-facing copy, or an architectural decision"
 namespaces: ["*"]
-version: 1.0.0
+version: 1.1.0
 status: live
 source: human
 termination: "the session's work is verified by the rule that governs it: a green deploy, a read task document, or a surfaced decision"
@@ -90,7 +90,7 @@ In any copy, UI text, email, or user-facing content for any project:
 - Exception: internal admin-only pages where Dustin is the only user
 - Exception: dustinedwards.info names its tools on purpose and carries an AI disclosure on /colophon. The rule above is for the products.
 
-## 7. Stop and Surface Architectural Decisions
+## 7. Surface Architectural Decisions
 
 Never make an architectural decision silently mid-task.
 
@@ -101,6 +101,6 @@ If you encounter any of the following, stop and surface it:
 - A third-party constraint that blocks the intended approach
 - A choice between two meaningfully different implementations
 
-Do not pick silently and proceed. Stop, name the decision, present options with tradeoffs, and wait.
+Do not pick silently and proceed. Name the decision and present options with tradeoffs. Then keep working on anything that does not depend on the answer, and build nothing that does until the decision is made.
 
 The cost of a wrong architectural decision discovered after implementation is always higher than the cost of stopping to ask.
