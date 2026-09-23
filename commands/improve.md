@@ -111,6 +111,22 @@ For each namespace:
    - `block` with a reason AND the exact command, when the work is finished up to a gate. **This is the stop, not a suggestion.** See the gate rule below. A blocked job is resumable (step 0), so the summary you leave is what the next session reads to continue: say what landed and what is left, not just what you were about to do.
 6. **Then stop for that namespace.** One job at a time, however many are queued. The next `/work` takes the next one. If the work merged a change to the tool surface, the SESSION stops here as well, not just the namespace: see the tool-surface rule below.
 
+### Unattended runs: a turn ends only at a real stop
+
+This applies when the command arrived as a bare `/improve work` with no human message around it, which is how the scheduler launches it (`claude -p "/improve work"`, capsid-mcp `scripts/schedule-drivers.mjs`). It does not apply when a human is in the conversation: an interactive session that claims one job keeps its ordinary check-ins.
+
+<!-- adapted from guides/opus-5-5.md, "Unattended agentic runs": "Claude Opus 5.5 is responsive to instructions that name the specific kinds of early stop you want it to avoid, such as ending the turn with a summary that announces the next step instead of taking it. It also helps to name the stops you do want" -->
+Headless, a message with no tool call in it ends the session, and the job stays claimed until its lease runs out. Nobody is there to say "continue". So none of these is a stop:
+
+- A summary of what was done that closes by announcing the next step without taking it.
+- An offer to carry on unless someone would prefer otherwise.
+- A list of decisions when, by your own account, none of them blocks the rest of the work.
+- Deciding this is a good place to report because the turn has been long or a milestone is done.
+
+Status notes are welcome, and so are recommendations on open decisions: put them in the same message as your next tool call and keep working on whatever does not depend on an answer. If you notice yourself inviting someone to redirect you or offering to wait, delete it and do the next thing.
+
+The stops that ARE wanted are the ones this file already names: the job reaches a gate and is `block`ed with its exact command (step 5, or a refused step 4b resume); the job is `complete`d or `fail`ed; a refusal ends the namespace (`no queued jobs`, `already holds`, a signature refusal, a heartbeat refused because the lease lapsed, a scope refusal, a missing key file); or the tool-surface rule ends the session. Each of those ends with the table below. Nothing in this section overrides a gate or the confirmation a risky or destructive action needs: carrying on means doing the next ungated step, never running the gated one.
+
 Finish with ONE table and nothing after it:
 
 | namespace | job | outcome | summary or command |
