@@ -128,9 +128,9 @@ questions, and one no is a refusal:
 3. Is it free of a ruling's fingerprints (a date, a measurement, a citation)?
 
 `scripts/line-scope.mjs` implements those questions and `test/line-scope.test.mjs`
-drives them against real planted lines, including the `foxing` and `recova` em
-dash rules, which a formatting guide would otherwise read as fair game and which
-a hook or a scrubber enforces.
+drives them against planted lines, including project em dash rules, which a
+formatting guide would otherwise read as fair game and which a hook or a
+scrubber enforces.
 
 The asymmetry is deliberate. A stale calibration line costs a slightly worse
 response. A deleted ruling costs a rule nobody notices is gone until the thing it
@@ -138,12 +138,13 @@ prevented happens again.
 
 ## Why the vendor skills are not owned
 
-22 of the 26 installed skills come from marketplaces or upstream repos
+22 of the 23 skills here come from marketplaces or upstream repos
 (Cloudflare, Anthropic). They are tracked in `MANIFEST.json` under `vendored` and
 `model-refresh` never edits them, for a practical reason: the next upstream
 update overwrites a local edit, so a rewrite there reads as a change that took
-and did not. Four skills are locally authored and owned: `dustin-workflow`,
-`foxing`, `recova`, `model-refresh`.
+and did not. One skill is locally authored and owned: `model-refresh`. The
+personal and project-specific skills (a workflow skill, `foxing`, `recova`) live
+in a separate private repo and are loaded beside these.
 
 The one edit the vendored set did take is its L1 frontmatter, added once when the
 package format landed. Expect an upstream update to drop those lines and the

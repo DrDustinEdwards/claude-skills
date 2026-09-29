@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 
 import { classifyFile, classifyLine } from '../scripts/line-scope.mjs';
 
-// The two planted lines the job asks for, copied verbatim from the live files so
-// the test is about the real thing rather than a convenient paraphrase.
+// The two planted lines the job asks for, shaped like the real ones in project
+// skills: a hook-enforced rule and a dated ruling that cites where it was made.
 const GATE_LINE =
   'A PostToolUse hook scans for trailing whitespace after every file edit. Strip it before you save. This applies to code, comments, copy, and commit messages.';
 const RULING_LINE =
@@ -81,10 +81,12 @@ test('planted gate and ruling lines survive a whole-file pass', () => {
 });
 
 test('project em dash rules enforced by a hook or a scrubber are both refused', () => {
-  const foxing =
+  const hooked =
     'A PostToolUse hook scans for em dashes (U+2014) after every file edit. Before pushing, grep the app folder for U+2014; the search must return 0 matches.';
-  const recova =
+  const scrubbed =
     'Never use em dashes in code or copy. Outgoing mail has a scrubber that removes them.';
-  assert.equal(classifyLine(foxing).scope, 'refused');
-  assert.equal(classifyLine(recova).scope, 'refused');
+  assert.equal(classifyLine(hooked).scope, 'refused');
+  assert.equal(classifyLine(hooked).question, 1);
+  assert.equal(classifyLine(scrubbed).scope, 'refused');
+  assert.equal(classifyLine(scrubbed).question, 1);
 });

@@ -1,0 +1,11 @@
+{
+  "comment": "Template for improve.local.json, the machine's settings for /improve. Copy it to improve.local.json in this folder and fill in real values. improve.local.json is gitignored: never commit it.",
+  "repo_folders": {
+    "capsid": "C:\\path\\to\\capsid",
+    "claude-skills": "C:\\path\\to\\claude-skills",
+    "example-namespace": "C:\\path\\to\\example-repo"
+  },
+  "worktrees_root": "C:\\path\\to\\worktrees",
+  "capsid_mcp_url": "https://<your-capsid-worker>/ops/mcp",
+  "key_file": "<key directory>/agent-<ns>-driver.key"
+}
