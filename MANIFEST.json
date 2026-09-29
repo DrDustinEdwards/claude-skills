@@ -1,9 +1,6 @@
 {
   "comment": "The files model-refresh may rewrite. Anything not listed here is read for context and never edited. Vendor skills are excluded on purpose: see README, 'Why the vendor skills are not owned'.",
   "owned": [
-    "skills/dustin-workflow/SKILL.md",
-    "skills/foxing/SKILL.md",
-    "skills/recova/SKILL.md",
     "skills/model-refresh/SKILL.md",
     "commands/improve.md"
   ],

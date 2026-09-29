@@ -132,7 +132,7 @@ export function validateEntry({ path, text, kind, expectedName, vendored = false
   }
 
   if (!empty(f.namespaces) && !Array.isArray(f.namespaces)) {
-    errors.push('namespaces must be a list, for example ["*"] or ["foxing"]');
+    errors.push('namespaces must be a list, for example ["*"] or ["my-project"]');
   }
 
   if (!empty(f.interface)) {

@@ -97,3 +97,18 @@ test('the skill takes the gates version from improve_status, not from the capsid
   assert.match(SKILL, /Call `improve_status` with `namespace: <ns>` and read `policies\.gates`/);
   assert.match(SKILL, /reports a `reason` in place of a version, or its `enabled` is false/);
 });
+
+// The repo is public, so what belongs to one machine lives in a gitignored
+// settings file and the committed command carries only placeholders for it.
+test('the command reads machine values from the local settings file, and carries none', () => {
+  assert.match(SKILL, /~\/\.claude\/commands\/improve\.local\.json/);
+  assert.doesNotMatch(SKILL, /[A-Z]:\\Users\\/, 'no absolute user path in the committed command');
+  assert.doesNotMatch(SKILL, /\.workers\.dev/, 'the Worker URL comes from the settings file');
+  const example = JSON.parse(readFileSync(join(REPO, 'commands', 'improve.local.example.json'), 'utf8'));
+  for (const key of ['repo_folders', 'worktrees_root', 'capsid_mcp_url', 'key_file']) {
+    assert.ok(key in example, `the example names ${key}`);
+    assert.match(SKILL, new RegExp(`\`${key}\``), `the command explains ${key}`);
+  }
+  const ignored = readFileSync(join(REPO, '.gitignore'), 'utf8').split(/\r?\n/);
+  assert.ok(ignored.includes('commands/improve.local.json'), 'the real settings file is gitignored');
+});

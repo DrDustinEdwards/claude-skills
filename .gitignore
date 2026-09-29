@@ -4,3 +4,8 @@ node_modules/
 
 # Project MCP config: carries a driver bearer token
 .mcp.json
+
+# Local only, never committed: the synced skills folder on this machine, and the
+# machine settings /improve reads (template: commands/improve.local.example.json)
+skills/synced/
+commands/improve.local.json

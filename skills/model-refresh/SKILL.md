@@ -63,11 +63,12 @@ failure to try.
    document. Those mark a decision somebody made for a reason the guide does not
    know about. Leave it.
 
-**Worked example of a line that looks in scope and is not.** `foxing/SKILL.md`
-section 8 and `recova/SKILL.md` both say "no em dashes". A formatting guide will
-tell you the model no longer overuses them. Both lines still stay: question 1
-fails (a hook or a scrubber enforces each one), and question 2 fails
-(they govern shipped code and copy). The guide has no standing over either.
+**Worked example of a line that looks in scope and is not.** Two project skills,
+`project-a/SKILL.md` and `project-b/SKILL.md`, both say "no em dashes". A
+formatting guide will tell you the model no longer overuses them. Both lines
+still stay: question 1 fails (a hook or a scrubber enforces each one), and
+question 2 fails (they govern shipped code and copy). The guide has no standing
+over either.
 
 **The asymmetry is deliberate.** Leaving a stale calibration line in place costs
 a slightly worse response. Deleting a ruling costs a rule nobody notices is gone
@@ -94,7 +95,7 @@ until the thing it prevented happens again. Refuse toward the second.
    A changed line without one is a defect: revert it.
 5. One branch, `model-refresh/<model>-<yyyy-mm-dd>`. **One commit per skill**, so
    a reviewer can take some and drop others. The message names the skill and the
-   behavior, not the intent: `dustin-workflow: allow formatting where it aids clarity`.
+   behavior, not the intent: `workflow: allow formatting where it aids clarity`.
 6. Open a pull request and stop. **Never merge**, and never push to the default
    branch. The merge is the human gate and it is the only thing that applies any
    of this.

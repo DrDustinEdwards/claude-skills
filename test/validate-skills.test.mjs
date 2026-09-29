@@ -165,7 +165,7 @@ test('every skill and command in the repo validates', () => {
     failures.map((f) => `${f.path}: ${f.errors.join('; ')}`),
     [],
   );
-  assert.ok(report.entries.length >= 27, `expected the whole tree, saw ${report.entries.length}`);
+  assert.ok(report.entries.length >= 25, `expected the whole tree, saw ${report.entries.length}`);
   assert.equal(report.ok, true);
 });
 
@@ -182,6 +182,7 @@ test('the vendored set is validated and marked, not skipped', () => {
   const wrangler = report.entries.find((e) => e.path === 'skills/wrangler/SKILL.md');
   assert.ok(wrangler, 'a vendored skill must still be validated');
   assert.equal(wrangler.vendored, true, 'and must be reported as vendored so nothing later rewrites it');
-  const foxing = report.entries.find((e) => e.path === 'skills/foxing/SKILL.md');
-  assert.equal(foxing.vendored, false);
+  const owned = report.entries.find((e) => e.path === 'skills/model-refresh/SKILL.md');
+  assert.ok(owned, 'the locally owned skill must be validated');
+  assert.equal(owned.vendored, false);
 });
