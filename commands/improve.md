@@ -33,8 +33,9 @@ in the same folder is the committed template, with placeholders. It holds:
 - `worktrees_root`: the folder every worktree goes under.
 - `capsid_mcp_url`: the Capsid Worker's `/ops/mcp` endpoint.
 - `key_file`: the path of a driver's key file, with `<ns>` in it.
+- `min_free_gb`: optional. The free disk, in GB, the drive holding `worktrees_root` must have before a claim, an install or a build. Unset means 20.
 
-Below, `<repo_folders.X>`, `<worktrees_root>`, `<capsid_mcp_url>` and `<key_file>`
+Below, `<repo_folders.X>`, `<worktrees_root>`, `<capsid_mcp_url>`, `<key_file>` and `<min_free_gb>`
 mean the value read from that file. **Read it before anything else. If it is
 missing, or does not parse, stop and say so, naming the file and the example**:
 a guessed path is how a driver ends up working the wrong clone.
@@ -142,6 +143,15 @@ A running session keeps the skill text it loaded at startup; the next session
 gets the new text.
 
 Arguments: `$ARGUMENTS`
+
+## DISK: CLEAN UP AFTER YOURSELF, AND NEVER CLAIM ONTO A FULL DRIVE
+
+Measured 2026-10-07 (job_fc71e9b0d728): three tabs chaining jobs filled a 465 GB drive overnight, because every job made a worktree with its own `node_modules` and nothing removed either. Every driver then stopped with ENOSPC. `scripts/disk-guard.mjs` in the claude-skills repo holds the decisions; run it from the live clone's path, `node <repo_folders.claude-skills>\scripts\disk-guard.mjs`. It reads state and never guesses: a worktree it cannot read is kept and listed.
+
+1. **AT THE START OF EVERY RUN, BEFORE ANY CLAIM:** `node <repo_folders.claude-skills>\scripts\disk-guard.mjs cleanup <worktrees_root> --apply`. A worktree whose pull request is merged or closed, with a clean tree and nothing unpushed, loses its `node_modules` and is removed (`git worktree remove`, never forced) and pruned. One whose pull request is open loses only its `node_modules`. One with uncommitted or unpushed work, or whose state could not be read, is untouched and printed as `keep-listed`: put those in your result table so the human sees them.
+2. **WHEN A JOB COMPLETES OR BLOCKS WITH ITS PULL REQUEST OPEN,** delete that worktree's `node_modules` (`Remove-Item -Recurse -Force <worktree>\node_modules`) before the final call.
+3. **BEFORE EVERY CLAIM, AND BEFORE ANY INSTALL OR BUILD:** `node <repo_folders.claude-skills>\scripts\disk-guard.mjs preflight <worktrees_root> <min_free_gb>`. Exit 0 continues. Exit 1 means under the minimum: run step 1's cleanup, then preflight again. Still exit 1: do not claim, install or build. Stop with the script's message and the 10 biggest folders under the user's home (`node -e "import('<repo_folders.claude-skills>/scripts/disk-guard.mjs').then(m=>console.log(m.biggestHomeFolders()))"`), in plain words. Exit 2, or a script that cannot run, is not a pass.
+4. **EVERY HEARTBEAT REPORTS FREE DISK:** run preflight first and put its `ok: <n> GB free` (or `STOP`) line in the heartbeat call's `reason` field. If the Worker does not store it, the free-disk line is still in the session log; the Capsid-side field (the Portal's per-machine free space, the watcher's under-30 GB flag) is a separate capsid job.
 
 ## If the argument is `work`: work the job queue
 
