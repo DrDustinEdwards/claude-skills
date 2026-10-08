@@ -27,6 +27,8 @@ Your existing Claude Fable 5 prompts should perform well on Claude Fable 5.1 wit
 
 <Note>
   Claude Fable 5.1 runs safety classifiers and can return `stop_reason: "refusal"`. See [Refusals, fallback, and billing](https://platform.claude.com/docs/en/models/fable-5-1/whats-new-fable-5-1#refusals-fallback-and-billing) and [Reduce safeguard false positives](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1#reduce-safeguard-false-positives).
+
+  Prompts, skills, and tool descriptions that ask the model to write out its thinking or reasoning may be declined with the `reasoning_extraction` category. Ask for a short explanation or a summary of the actions taken instead, or read the reasoning from [summarized thinking](https://platform.claude.com/docs/en/build-with-claude/thinking#summarized-thinking) blocks (`display: "summarized"`). See [Keep reasoning in thinking blocks](https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback#keep-reasoning-in-thinking-blocks).
 </Note>
 
 ## Consider all effort levels
@@ -761,7 +763,7 @@ To find edits your harness already makes, run a session with `prefix_mismatch_be
 
 ## Writing density
 
-Claude Fable 5.1's writing is generally a step up from earlier Claude models, with fewer stock phrases and less unexplained jargon. In some cases, though, its prose is denser than Claude Fable 5's: sentences run longer and there are fewer paragraph breaks. An instruction that defines the anti-pattern, mannered prose, helps. Add it to a user message (preferred) or the system prompt:
+Claude Fable 5.1's writing has few stock phrases and little unexplained jargon. In some cases, though, its prose is denser than Claude Fable 5's: sentences run longer and there are fewer paragraph breaks. An instruction that defines the anti-pattern, mannered prose, helps. Add it to a user message (preferred) or the system prompt:
 
 ```text wrap
 Mannered prose substitutes metaphor and flourish for direct statement. Instead of "a parameter worth varying," the mannered writer produces "a dial worth turning." Instead of "this point still matters," they write "this point earns its keep." The phrases exist to display the writer, not to convey the idea, and readers can tell. That is why mannered prose irritates: it makes the reader work harder so the writer can perform. It is also imprecise. Metaphors drag in connotations the writer did not choose and cannot control. The fix is to say what you mean. When a literal phrase is available, use it.

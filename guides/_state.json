@@ -1,32 +1,27 @@
 {
-  "fetched_at": "2026-09-23T08:29:20.162Z",
-  "overview_sha256": "02ebe565bc995c5a251fa578699ea048371cdcc2632b0c4d91541bab0e5c2605",
+  "fetched_at": "2026-10-08T04:03:17.973Z",
+  "overview_sha256": "a509d966cf13c2e11009bde35c1dd279c6694bc7b26a0f19ab9395c00b04f1fb",
   "models": {
     "fable-5-1": {
       "status": 200,
       "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1.md",
-      "sha256": "a9bb027ffcac9ec0291660c2c1a6334f128927f6d83cbac121f9a24c5e2cc0f9",
-      "fetched_at": "2026-09-23T08:29:20.162Z",
-      "changed_at": "2026-09-23T08:29:20.162Z"
-    },
-    "haiku-4-5": {
-      "status": 404,
-      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-haiku-4-5.md",
-      "fetched_at": "2026-09-23T08:29:20.162Z"
+      "sha256": "4aa7e61031b5d52456433bd9804503717b8e0b5a3c35137f48ea5324c7913db4",
+      "fetched_at": "2026-10-08T04:03:17.973Z",
+      "changed_at": "2026-10-08T04:03:17.973Z"
     },
     "opus-5-5": {
       "status": 200,
       "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5.md",
-      "sha256": "ed712502864384fba8504c65020f1eb71fde25a7ce81b20800e9ddf865130bb9",
-      "fetched_at": "2026-09-23T08:11:45.116Z",
-      "changed_at": "2026-09-23T08:11:45.116Z"
+      "sha256": "37c6216c30e91cc2238758386e31ed1fba69988363d366438d11a81424f648d5",
+      "fetched_at": "2026-10-08T04:03:17.973Z",
+      "changed_at": "2026-10-08T04:03:17.973Z"
     },
-    "sonnet-5": {
+    "sonnet-5-5": {
       "status": 200,
-      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-sonnet-5.md",
-      "sha256": "07e7db846f96915a1d533fe6f62f7812790a966361b9982b6522557e74d08127",
-      "fetched_at": "2026-09-11T06:20:06.344Z",
-      "changed_at": "2026-09-11T06:20:06.344Z"
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-sonnet-5-5.md",
+      "sha256": "a5c6fe2de8ab6891003d4470def0a612cebf2667bb5852dea41acab18b54377e",
+      "fetched_at": "2026-10-08T04:03:17.973Z",
+      "changed_at": "2026-10-08T04:03:17.973Z"
     }
   }
 }
