@@ -1,0 +1,4 @@
+{
+  "description": "ops-guards hooks module",
+  "modules": ["./register.js"]
+}

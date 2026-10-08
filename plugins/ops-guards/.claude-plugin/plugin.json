@@ -1,0 +1,26 @@
+{
+  "name": "ops-guards",
+  "version": "0.1.0",
+  "description": "Three guards for tabs and drivers: one heavy install or build at a time across sessions, secrets never reach the model, and no force push, git clean -x or junction-following delete.",
+  "author": { "name": "Dustin Edwards" },
+  "userConfig": {
+    "heavyLock": {
+      "type": "boolean",
+      "title": "Heavy-work lock",
+      "description": "Make installs and builds wait their turn across tabs and the nightly scheduler.",
+      "default": true
+    },
+    "redaction": {
+      "type": "boolean",
+      "title": "Key redaction",
+      "description": "Strip secrets from tool output and refuse reads of ~/.capsid/*.key and .mcp.json.",
+      "default": true
+    },
+    "destructiveGuard": {
+      "type": "boolean",
+      "title": "Destructive-command guard",
+      "description": "Refuse force pushes, git clean -x, and recursive deletes of a tree holding a node_modules junction.",
+      "default": true
+    }
+  }
+}
