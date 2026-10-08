@@ -6,6 +6,7 @@
     "example-namespace": "C:\\path\\to\\example-repo"
   },
   "worktrees_root": "C:\\path\\to\\worktrees",
+  "min_free_gb": 20,
   "capsid_mcp_url": "https://<your-capsid-worker>/ops/mcp",
   "key_file": "<key directory>/agent-<ns>-driver.key"
 }
