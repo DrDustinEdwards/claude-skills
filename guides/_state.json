@@ -9,13 +9,6 @@
       "fetched_at": "2026-10-08T04:03:17.973Z",
       "changed_at": "2026-10-08T04:03:17.973Z"
     },
-    "haiku-5-5": {
-      "status": 200,
-      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-haiku-5-5.md",
-      "sha256": "db7f37e24566aaacafdb46fbe7f9ec1065454a2f2612ad48bc19459b14795918",
-      "fetched_at": "2026-10-08T04:03:17.973Z",
-      "changed_at": "2026-10-08T04:03:17.973Z"
-    },
     "opus-5-5": {
       "status": 200,
       "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5.md",
