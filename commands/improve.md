@@ -72,6 +72,14 @@ claude mcp add -s project -t http capsid \
   -H "Authorization: Bearer $(cat <key_file>)"
 ```
 
+**ADMIN EXPOSURE PREFLIGHT, BEFORE ANY CLAIM AND BEFORE ANYTHING ELSE THAT REACHES CAPSID** (DECIDE 6 of capsid/research/design-local-admin-exposure.md, Dustin 2026-10-04). A driver must reach Capsid only through its own key. Two things on this machine would let a session reach it as the admin: the claude.ai Capsid connector being loaded, and `~/.capsid/agent-seat.key` being on disk. Run, from the repo folder you are working in:
+
+```
+node <repo_folders.capsid>\scripts\admin-exposure-check.mjs --cwd <repo folder>
+```
+
+Continue only when it exits 0 and prints `"ok":true`. Any other result is a refusal: stop, and report its `reasons` (it prints server names and booleans, never a key). **Fail closed:** if the script is missing, will not run, prints nothing that parses, or exits non-zero without a `reasons` list, that is a refusal too, and the reason is "the admin exposure check could not run". Do not fall back to skipping it, and do not remove the connector or the seat key yourself: that is the human's call. The disk preflight and the key file check below come after it.
+
 **`work all` IS THEREFORE RETIRED as a single-session walk.** One session cannot
 present five credentials, and a session that worked five namespaces on one key
 would be the wide credential this arc exists to remove. Asked for `work all`, do
