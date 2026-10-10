@@ -7,8 +7,10 @@
 name: ci
 
 on:
+  # Both names while master moves to main (capsid job_bf05bc756c5e, plan step 1), so a
+  # push is checked on either side of the rename. Step 4 drops master.
   push:
-    branches: [master]
+    branches: [master, main]
   pull_request:
 
 permissions:
