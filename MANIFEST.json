@@ -5,30 +5,7 @@
     "commands/improve.md"
   ],
   "vendored": {
-    "comment": "Installed from marketplaces or upstream repos. Tracked so a refresh run can name them as skipped rather than silently ignoring them, and so a future update that clobbers a local edit is expected rather than surprising.",
-    "skills": [
-      "agent-browser",
-      "agents-sdk",
-      "cloudflare",
-      "cloudflare-email-service",
-      "cloudflare-one",
-      "cloudflare-one-migrations",
-      "design-taste-frontend",
-      "durable-objects",
-      "find-skills",
-      "frontend-design",
-      "karpathy-guidelines",
-      "mcp-builder",
-      "nextjs-on-cloudflare",
-      "sandbox-migrate-to-next",
-      "sandbox-next",
-      "sandbox-stable",
-      "skill-creator",
-      "turnstile-spin",
-      "web-perf",
-      "webapp-testing",
-      "workers-best-practices",
-      "wrangler"
-    ]
+    "comment": "Installed from marketplaces or upstream repos. Empty since 2026-10-18: the vendor skills now live in the Claude account, which syncs them to every machine. A skill vendored here again is listed so a refresh run names it as skipped.",
+    "skills": []
   }
 }

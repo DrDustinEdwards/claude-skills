@@ -2,6 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 
 import { parseFrontmatter, validateEntry, validateTree } from '../scripts/validate-skills.mjs';
 
@@ -165,7 +167,8 @@ test('every skill and command in the repo validates', () => {
     failures.map((f) => `${f.path}: ${f.errors.join('; ')}`),
     [],
   );
-  assert.ok(report.entries.length >= 25, `expected the whole tree, saw ${report.entries.length}`);
+  const kinds = new Set(report.entries.map((e) => e.kind));
+  assert.deepEqual([...kinds].sort(), ['candidate', 'command', 'skill'], 'expected skills, candidates and commands all read');
   assert.equal(report.ok, true);
 });
 
@@ -178,11 +181,27 @@ test('the candidates README is not mistaken for a skill', () => {
 });
 
 test('the vendored set is validated and marked, not skipped', () => {
-  const report = validateTree(REPO);
-  const wrangler = report.entries.find((e) => e.path === 'skills/wrangler/SKILL.md');
-  assert.ok(wrangler, 'a vendored skill must still be validated');
-  assert.equal(wrangler.vendored, true, 'and must be reported as vendored so nothing later rewrites it');
-  const owned = report.entries.find((e) => e.path === 'skills/model-refresh/SKILL.md');
-  assert.ok(owned, 'the locally owned skill must be validated');
-  assert.equal(owned.vendored, false);
+  const root = mkdtempSync(join(tmpdir(), 'skills-'));
+  try {
+    const skill = (name) => [
+      '---', `name: ${name}`, 'description: A sample skill for the validator.', 'trigger: sample',
+      'namespaces: ["*"]', 'version: 1.0.0', 'status: live', 'source: human', 'termination: done',
+      'interface:', '  inputs: []', '  outputs: []', '---', '', 'Body.', '',
+    ].join('\n');
+    for (const name of ['sample-vendor', 'sample-owned']) {
+      mkdirSync(join(root, 'skills', name), { recursive: true });
+      writeFileSync(join(root, 'skills', name, 'SKILL.md'), skill(name));
+    }
+    mkdirSync(join(root, 'commands'));
+    writeFileSync(join(root, 'MANIFEST.json'), JSON.stringify({ vendored: { skills: ['sample-vendor'] } }));
+    const report = validateTree(root);
+    const vendor = report.entries.find((e) => e.path === 'skills/sample-vendor/SKILL.md');
+    assert.ok(vendor, 'a vendored skill must still be validated');
+    assert.equal(vendor.vendored, true, 'and must be reported as vendored so nothing later rewrites it');
+    const owned = report.entries.find((e) => e.path === 'skills/sample-owned/SKILL.md');
+    assert.ok(owned, 'the locally owned skill must be validated');
+    assert.equal(owned.vendored, false);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });
