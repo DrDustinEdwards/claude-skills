@@ -1,13 +1,13 @@
 name: code-map
 
-# After each push to main, devkit's shared code-map workflow measures this repository's scripts and hooks and
+# After each push to master, devkit's shared code-map workflow measures this repository's scripts and hooks and
 # publishes code-map.json to the code-map branch, where the Capsid system explorer reads it. Never a gate on a pull request.
 # There is no lockfile and no tsconfig: the map installs only typescript and reads the .mjs files as plain modules.
 # The skills' templates are left out: they are copied into other repositories, not run here.
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
 
 # One run at a time, so an older push's map never lands after a newer one.
