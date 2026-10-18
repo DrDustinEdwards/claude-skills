@@ -138,18 +138,21 @@ prevented happens again.
 
 ## Why the vendor skills are not owned
 
-22 of the 23 skills here come from marketplaces or upstream repos
-(Cloudflare, Anthropic). They are tracked in `MANIFEST.json` under `vendored` and
-`model-refresh` never edits them, for a practical reason: the next upstream
-update overwrites a local edit, so a rewrite there reads as a change that took
-and did not. One skill is locally authored and owned: `model-refresh`. The
-personal and project-specific skills (a workflow skill, `foxing`, `recova`) live
-in a separate private repo and are loaded beside these.
+Skills from marketplaces or upstream repos (Cloudflare, Taste, Impeccable) no
+longer live here. Since 2026-10-18 they are uploaded to the Claude account, which
+syncs them to every machine and every cloud session; the review that chose them is
+in the Capsid project files (skills/skills-full-review-2026-10-18.md). Copies here
+loaded beside the account versions under the same names and went stale first.
 
-The one edit the vendored set did take is its L1 frontmatter, added once when the
-package format landed. Expect an upstream update to drop those lines and the
-validator to catch it. That is the intended shape of the failure: a clobbered
-vendored skill should be loud rather than quiet.
+The one skill here is locally authored and owned: `model-refresh`. The personal
+and project-specific skills (a workflow skill, `foxing`, `recova`) live in a
+separate private repo and are loaded beside it.
+
+If a vendor skill is ever brought back, list it in `MANIFEST.json` under
+`vendored`. `model-refresh` never edits a listed skill, for a practical reason:
+the next upstream update overwrites a local edit, so a rewrite there reads as a
+change that took and did not. The validator still checks it and marks it
+vendored, so a clobbered L1 block is loud rather than quiet.
 
 ## Running it
 
