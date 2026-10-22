@@ -45,6 +45,18 @@ test('an em dash rule about shipped code is refused even with no hook named', ()
   assert.equal(v.question, 2);
 });
 
+// Shaped like the gates the 2026-10-21 audit found marked eligible: ordinary words
+// such as "response" and "list", next to the tool, field or path a check depends on.
+test('a procedure line that names a tool, a field or a path is refused', () => {
+  for (const line of [
+    '1b. **VERIFY THE DOC FIRST.** Read `task_verification` in the response and act only when `ok` is true.',
+    'If the response says `held: false`, another driver has the namespace; do not pass `release` to take it.',
+    '- **Never touch a protected path** (tests, `.github/**`, lockfiles); that list is a summary for a reader.',
+  ]) {
+    assert.equal(classifyLine(line).scope, 'refused', line);
+  }
+});
+
 test('an unrecognized line fails closed', () => {
   const v = classifyLine('Deploys go through npm run ship and nothing else.');
   assert.equal(v.scope, 'refused');

@@ -61,15 +61,15 @@ export function redactResult(value, seen = new WeakSet()) {
 
 // Files whose contents a session never needs: driver and seat keys, and the project MCP
 // config that carries a driver bearer token.
-const KEY_PATH = /(?:^|[\\/])\.capsid[\\/][^\s"'\\/]*\.key\b/i;
+const KEY_PATH = /(?:^|[\\/\s"'=])\.capsid[\\/][^\s"'\\/]*\.key\b/i;
 const MCP_JSON = /(?:^|[\\/\s"'=])\.mcp\.json\b/i;
 
 export function isSecretPath(path) {
   return typeof path === 'string' && (KEY_PATH.test(path) || MCP_JSON.test(path));
 }
 
-// A command that only checks a key file exists (Test-Path, ls, stat) is allowed: /improve
-// does exactly that before a claim. One that reads the contents is not.
+// A command that only checks a key file exists (Test-Path, ls, stat) is allowed. One that
+// reads the contents is not.
 const READ_VERBS =
   /(?:^|[\s;&|(`$])(?:cat|type|more|less|head|tail|sed|awk|grep|egrep|rg|findstr|xxd|od|base64|certutil|cp|copy|mv|move|scp|curl|Get-Content|gc|Select-String|sls|Copy-Item|cpi|Import-Clixml|ConvertFrom-Json|ReadAllText)\b|<\s*\S/i;
 

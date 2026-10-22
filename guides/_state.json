@@ -1,27 +1,34 @@
 {
-  "fetched_at": "2026-10-08T04:03:17.973Z",
-  "overview_sha256": "a509d966cf13c2e11009bde35c1dd279c6694bc7b26a0f19ab9395c00b04f1fb",
+  "fetched_at": "2026-10-22T22:33:48.916Z",
+  "overview_sha256": "968e6bc022276fe6d4cefa24f19ebfffcd8f25e5adf358d32612da16f694bd8e",
   "models": {
     "fable-5-1": {
       "status": 200,
       "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1.md",
-      "sha256": "4aa7e61031b5d52456433bd9804503717b8e0b5a3c35137f48ea5324c7913db4",
-      "fetched_at": "2026-10-08T04:03:17.973Z",
-      "changed_at": "2026-10-08T04:03:17.973Z"
+      "sha256": "f6115cfde7e38345231c28f9b75cd83fb44d55b21889c41a64dba0fde15d3807",
+      "fetched_at": "2026-10-22T22:33:48.916Z",
+      "changed_at": "2026-10-22T22:33:48.916Z"
+    },
+    "haiku-5-5": {
+      "status": 200,
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-haiku-5-5.md",
+      "sha256": "fd49d70526cc90348cde41d4d6eed8f28658fb54e1605b2d5e213557700259d4",
+      "fetched_at": "2026-10-22T22:33:48.916Z",
+      "changed_at": "2026-10-22T22:33:48.916Z"
     },
     "opus-5-5": {
       "status": 200,
       "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5.md",
-      "sha256": "37c6216c30e91cc2238758386e31ed1fba69988363d366438d11a81424f648d5",
-      "fetched_at": "2026-10-08T04:03:17.973Z",
-      "changed_at": "2026-10-08T04:03:17.973Z"
+      "sha256": "37c81d6119dc00a5bf131cd13eb0eb108e8bfbe66bff27f2bc64456299df2a95",
+      "fetched_at": "2026-10-22T22:33:48.916Z",
+      "changed_at": "2026-10-22T22:33:48.916Z"
     },
     "sonnet-5-5": {
       "status": 200,
       "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-sonnet-5-5.md",
-      "sha256": "a5c6fe2de8ab6891003d4470def0a612cebf2667bb5852dea41acab18b54377e",
-      "fetched_at": "2026-10-08T04:03:17.973Z",
-      "changed_at": "2026-10-08T04:03:17.973Z"
+      "sha256": "69e646b9ce97c2c5af96522017ce16a309a6d18653f940014c27e4f91ec49b39",
+      "fetched_at": "2026-10-22T22:33:48.916Z",
+      "changed_at": "2026-10-22T22:33:48.916Z"
     }
   }
 }

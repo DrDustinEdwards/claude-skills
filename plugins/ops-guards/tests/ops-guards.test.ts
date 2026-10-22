@@ -1,7 +1,6 @@
 // Wiring tests for register.js, run with `claude plugin test` from this folder. The
 // decisions themselves (patterns, lock format, command parsing) are tested under plain
-// `node --test` in the repo's test/ folder, which CI runs. CI does not install Claude
-// Code, so this file is run locally.
+// `node --test` in the repo's test/ folder. CI runs both.
 import { expect, test } from 'claude-code/testing'
 
 const GOOD_KEY = 'capsid_' + 'a1b2c3d4'.repeat(8)
@@ -53,7 +52,7 @@ test('a recursive delete of a tree holding a node_modules junction is refused', 
   })
   on('process.run', ($, e: any) => {
     const argv: string[] = e.argv
-    if (argv[0] === 'cmd' && argv.includes('/S')) return { value: { exitCode: 0, stdout: 'C:\\w\\wt\\node_modules\r\n', stderr: '' } }
+    if (argv[0] === 'node' && argv[1].endsWith('/hooks/junctions.mjs') && argv[2] === 'C:\\w\\wt') return { value: { exitCode: 0, stdout: '{"link":"C:\\\\w\\\\wt\\\\node_modules"}\n', stderr: '' } }
     return { value: { exitCode: 1, stdout: '', stderr: 'unexpected' } }
   })
   const out: any = await $.tool.call({ tool: 'Bash', command: 'rm -rf C:/w/wt' })
@@ -65,7 +64,7 @@ test('a recursive delete of a tree holding a node_modules junction is refused', 
 test('a recursive delete with no junction under it goes through', async ($, on) => {
   stubSession($, on)
   on('tool.call', () => ({ result: 'deleted' }))
-  on('process.run', () => ({ value: { exitCode: 0, stdout: '', stderr: '' } }))
+  on('process.run', () => ({ value: { exitCode: 0, stdout: '{"link":null}\n', stderr: '' } }))
   const out: any = await $.tool.call({ tool: 'Bash', command: 'rm -rf C:/w/wt' })
   expect(out.deny).toBeUndefined()
 })

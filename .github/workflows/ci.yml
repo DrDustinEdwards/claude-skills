@@ -3,7 +3,8 @@
 # and the sessions that would load it.
 #
 # There are no dependencies and no lockfile on purpose: the tests use node --test
-# and touch no network, so there is nothing to install and nothing to pin.
+# and touch no network. The one install is Claude Code at an exact version, for the
+# plugin's wiring tests.
 name: ci
 
 on:
@@ -31,3 +32,9 @@ jobs:
 
       - name: Test
         run: npm test
+
+      - name: Test the ops-guards wiring
+        working-directory: plugins/ops-guards
+        run: |
+          npm i -g @anthropic-ai/claude-code@2.1.309
+          claude plugin test

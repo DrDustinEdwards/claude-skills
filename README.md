@@ -26,9 +26,9 @@ guides/<model>.md             fetched vendor prompting guides, one per model
 guides/_state.json            per-guide url, sha256, fetched_at, changed_at
 scripts/model-guides.mjs      fetches the guides, reports which changed
 scripts/line-scope.mjs        the refusal rules of model-refresh, as testable code
-scripts/block-command.mjs     the command shape /improve step 4b self-approves, as testable code
 scripts/validate-skills.mjs   refuses a skill missing an L1 field
 MANIFEST.json                 which files model-refresh may rewrite, and what is vendored
+plugins/ops-guards/           the heavy-work lock, key redaction and command guard hooks
 test/                         node --test, no network, no secrets
 ```
 
@@ -67,9 +67,8 @@ of things to try, which is not the same as finishing.
 
 **L2, the body.** The instructions themselves, below the frontmatter.
 
-**L3, `checks/` and `scripts/`.** Optional, and they run in the scorer sandbox
-and nowhere else. A skill that needs to execute something to prove it worked puts
-it here rather than asking the session to run it.
+**L3, `checks/` and `scripts/`.** Optional. A skill that needs to execute
+something to prove it worked puts it here rather than in the prose.
 
 ### The validator
 
@@ -95,10 +94,8 @@ it. That is the safety property the directory exists for, and
 Promotion moves the directory to `skills/<name>/` and sets `status: live` in the
 same commit. Retirement sets `status: retired` in place and deletes nothing.
 Neither one is something a session does to its own working copy on the strength
-of the skill having worked once, and neither is something the evaluation loop
-does on its own: the loop records the evidence, a pull request cites it, a human
-merges it. The measurement lives in Capsid; the pull request points at it rather
-than restating it.
+of the skill having worked once: the evidence is recorded in Capsid, a pull
+request cites it, a human merges it.
 
 ## The model-refresh loop
 
@@ -110,8 +107,9 @@ The loop closes that gap:
    stores it, and reports which hashes moved. The guide file holds fetched bytes
    only, so its hash is the hash of the document; `fetched_at` lives in
    `_state.json` and does not perturb the hash.
-2. A weekly job posts `skills: refresh for <model>` when a hash changed or a new
-   model appeared. A run where nothing changed posts nothing.
+2. `.github/workflows/guides.yml` checks every Monday and opens the issue
+   `skills: guides changed` when a hash changed or a new model appeared. A week
+   where nothing changed posts nothing.
 3. The `model-refresh` skill reads the guide and proposes edits to owned files.
 4. It opens a pull request. **Nothing applies without the merge.**
 

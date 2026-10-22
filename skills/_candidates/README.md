@@ -42,8 +42,8 @@ interface:
 source here: a candidate exists because a run produced it, so the attempt or job
 id that produced it is what a reviewer follows back to the evidence.
 
-`checks/` and `scripts/` beside `SKILL.md` are L3. They run in the scorer
-sandbox and nowhere else.
+`checks/` and `scripts/` beside `SKILL.md` are L3: what the skill runs to prove
+it worked.
 
 ## Status changes only by pull request
 
