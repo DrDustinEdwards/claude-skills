@@ -1,4 +1,4 @@
-// ops-guards: three guards for tabs and drivers on this machine (job_1e4b82452fe0).
+// ops-guards: three guards for sessions on this machine (job_1e4b82452fe0).
 //
 //   1. heavy lock     one install or build at a time across tabs and the scheduler
 //   2. key redaction  secrets never reach the model, and key files are never read
@@ -11,7 +11,7 @@
 // A hooks module has to keep every `$` call visible to `claude plugin validate`, so each
 // call is written in full and `$` is passed only to functions declared in this file. The
 // decisions live in ./lib, which takes plain data and is tested with `node --test`.
-import { analyzeCommand, junctionIn, selfIsNodeModules, JUNCTION_DENY } from './lib/guard.mjs'
+import { analyzeCommand, JUNCTION_DENY } from './lib/guard.mjs'
 import { isHeavy, lockNs, waitMessage } from './lib/heavy.mjs'
 import { isSecretPath, readsSecretFile, redactResult, SECRET_READ_DENY } from './lib/redact.mjs'
 
@@ -59,15 +59,13 @@ async function dropLock($, ns) {
   if (held === 0) await lockCall($, ['release', ns], 30_000)
 }
 
-// The first node_modules link under a delete target, or null.
+// The first node_modules link under a delete target, or null. The walk is junctions.mjs,
+// so the target is an argument to node and never reparsed by a shell. A probe that
+// fails throws, and the catch below refuses the delete.
 async function findJunction($, target) {
-  if (selfIsNodeModules(target)) {
-    const parent = target.slice(0, target.lastIndexOf('\\'))
-    const listed = await $.process.run(['cmd', '/c', 'dir', '/AL', '/B', parent], { timeoutMs: 60_000 })
-    return listed.exitCode === 0 && /^node_modules\s*$/im.test(listed.stdout) ? target : null
-  }
-  const listed = await $.process.run(['cmd', '/c', 'dir', '/AL', '/S', '/B', target], { timeoutMs: 120_000 })
-  return listed.exitCode === 0 ? junctionIn(listed.stdout) : null
+  const run = await $.process.run(['node', $.plugin.root + '/hooks/junctions.mjs', target], { timeoutMs: 120_000 })
+  if (run.exitCode !== 0) throw new Error('junctions.mjs failed: ' + (run.stderr || run.stdout))
+  return JSON.parse(run.stdout.trim().split(/\r?\n/).pop()).link
 }
 
 const SHELL_TOOLS = ['Bash', 'PowerShell']

@@ -1,0 +1,43 @@
+name: guides
+
+# Once a week, check the vendor prompting guides against guides/_state.json. When a
+# guide changed or a new model appeared, open an issue (or comment on the open one)
+# naming them, so someone runs `npm run guides` and the model-refresh skill. A week
+# with no change posts nothing.
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Compare the live guides with the ledger
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          npm run -s guides:check > check.json
+          changed=$(node -e 'console.log(JSON.parse(require("fs").readFileSync("check.json","utf8")).changed.join(", "))')
+          if [ -z "$changed" ]; then
+            echo "No guide changed."
+            exit 0
+          fi
+          body="The prompting guides changed for: $changed. Run \`npm run guides\`, then the model-refresh skill for each model, and open a pull request."
+          open=$(gh issue list --state open --search 'in:title "skills: guides changed"' --json number --jq '.[0].number')
+          if [ -n "$open" ]; then
+            gh issue comment "$open" --body "$body"
+          else
+            gh issue create --title "skills: guides changed" --body "$body"
+          fi

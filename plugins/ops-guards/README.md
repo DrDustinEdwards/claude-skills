@@ -30,7 +30,7 @@ The guards fail closed. If a guard throws or times out, the call is refused with
 ## Tests
 
 - `test/ops-guards-*.test.mjs` in the repo root: the patterns, the command parser and the lock, under `node --test`. CI runs these (`npm test`).
-- `tests/ops-guards.test.ts` here: the wiring in `hooks/register.js`, run with `claude plugin test` from this folder. CI does not install Claude Code, so this is run locally.
+- `tests/ops-guards.test.ts` here: the wiring in `hooks/register.js`, run with `claude plugin test` from this folder. CI installs Claude Code at an exact version and runs it too.
 - `claude plugin validate .` lists the hooks and calls the plugin makes.
 
 ## Files
@@ -40,6 +40,7 @@ The guards fail closed. If a guard throws or times out, the call is refused with
 hooks/hooks.json             points at register.js
 hooks/register.js            the wiring; every $ call lives here
 hooks/lock.mjs               the lock as a command (a hooks module cannot make an exclusive create)
+hooks/junctions.mjs          the node_modules link probe as a command, walked with lstat
 hooks/lib/redact.mjs         secret patterns and key-file paths
 hooks/lib/guard.mjs          command parsing for the guard
 hooks/lib/heavy.mjs          which commands are heavy

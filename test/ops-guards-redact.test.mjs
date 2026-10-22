@@ -104,6 +104,9 @@ test('reads of key files and .mcp.json are recognised, existence checks are not'
     'grep token .mcp.json',
     'head -c 20 C:/Users/e/.capsid/agent-a.key',
     'node -e "x" < C:/Users/e/.capsid/agent-a.key',
+    'Get-Content .capsid\\agent-seat.key',
+    "Get-Content '.capsid\\agent-seat.key'",
+    'gc .capsid\\x.key',
   ];
   const allow = [
     'Test-Path "C:\\Users\\email\\.capsid\\agent-claude-skills-driver.key"',
@@ -111,11 +114,10 @@ test('reads of key files and .mcp.json are recognised, existence checks are not'
     'test -f ~/.capsid/agent-seat.key && echo present',
     'git check-ignore .mcp.json',
     'cat README.md',
-    'Get-Content commands\\improve.local.json',
   ];
   for (const c of deny) assert.equal(readsSecretFile(c), true, `should refuse: ${c}`);
   for (const c of allow) assert.equal(readsSecretFile(c), false, `should allow: ${c}`);
-  assert.equal(deny.length + allow.length, 14, 'count of commands judged');
+  assert.equal(deny.length + allow.length, 16, 'count of commands judged');
 });
 
 test('isSecretPath names the tool-call paths', () => {

@@ -115,7 +115,7 @@ export function isForcePush(w) {
 // ---- git clean -x ------------------------------------------------------------------
 
 export const GIT_CLEAN_X_DENY =
-  'git clean -x / -X deletes ignored files, which includes skills/synced and commands/improve.local.json (the machine settings) ' +
+  'git clean -x / -X deletes ignored files, which includes skills/synced (local only) ' +
   'and every node_modules. Use git clean -n to list what it would remove, and delete named untracked files individually.';
 
 export function isGitCleanIgnored(w) {
@@ -165,8 +165,9 @@ export function deleteTargets(w, cwd) {
   const operands = () => w.slice(1).filter((a) => !a.startsWith('-'));
   // POSIX rm: a short cluster of at most four letters holding r or R, or --recursive.
   const posixRecursive = w.slice(1).some((a) => a === '--recursive' || /^-[A-Za-z]{1,4}$/.test(a) && /[rR]/.test(a));
-  // PowerShell Remove-Item: -Recurse, or any prefix of it of two letters or more.
-  const psRecursive = w.slice(1).some((a) => /^-re(c(u(r(se?)?)?)?)?$/i.test(a));
+  // PowerShell Remove-Item: -Recurse, or any prefix of it of two letters or more, with or
+  // without a value (-Recurse:$true).
+  const psRecursive = w.slice(1).some((a) => /^-re(c(u(r(se?)?)?)?)?(:.*)?$/i.test(a));
   if (RM_NAMES.has(name) && posixRecursive) {
     raw = operands();
   } else if (PS_REMOVE.has(name) && psRecursive) {
@@ -181,23 +182,6 @@ export function deleteTargets(w, cwd) {
     }
   }
   return raw.map((p) => absolutePath(p, cwd)).filter(Boolean);
-}
-
-/**
- * Probe output of `cmd /c dir /AL /S /B <target>` (every reparse point under the target):
- * returns the first line that is a node_modules link, or null.
- */
-export function junctionIn(output) {
-  for (const line of String(output ?? '').split(/\r?\n/)) {
-    const l = line.trim();
-    if (/[\\/]node_modules$/i.test(l)) return l;
-  }
-  return null;
-}
-
-/** Is the target itself a node_modules link? `dir /AL /B <parent>` lists it by name. */
-export function selfIsNodeModules(target) {
-  return /[\\/]node_modules$/i.test(target);
 }
 
 /**

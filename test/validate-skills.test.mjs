@@ -147,7 +147,7 @@ test('a live directory may not hold status candidate', () => {
 // requiring a name key there would fail every command in the repo.
 test('a command is not required to carry a name key', () => {
   const text = drop('name');
-  const v = validateEntry({ path: 'commands/improve.md', text, kind: 'command', expectedName: 'improve' });
+  const v = validateEntry({ path: 'commands/example.md', text, kind: 'command', expectedName: 'example' });
   assert.deepEqual(v.errors, []);
 });
 
@@ -168,7 +168,7 @@ test('every skill and command in the repo validates', () => {
     [],
   );
   const kinds = new Set(report.entries.map((e) => e.kind));
-  assert.deepEqual([...kinds].sort(), ['candidate', 'command', 'skill'], 'expected skills, candidates and commands all read');
+  assert.deepEqual([...kinds].sort(), ['candidate', 'skill'], 'expected skills and candidates read (commands/ holds none now)');
   assert.equal(report.ok, true);
 });
 

@@ -15,6 +15,9 @@ const ENFORCED = [
   /\bhooks?\b/i, /PostToolUse/, /PreToolUse/, /\bscrubber\b/i, /\bCI\b/, /\bgate[sd]?\b/i,
   /\blinter?\b/i, /\bnpm run \w+/, /\btest\/\S+/, /\bmust return 0\b/i, /\basserts?\b/i,
   /\bfails the build\b/i, /\bblocks? the (push|commit|merge)\b/i, /\bexit(s)? (1|non-zero)\b/i,
+  // A line that names something exact (a tool, a field, a path in backticks, or a
+  // numbered step) is a procedure some check depends on, however ordinary its words.
+  /`[^`]+`/, /^\s*\d+[a-z]?\.\s/, /\bstep \d/i,
 ];
 
 // Question 2: does it govern a shipped artifact rather than the assistant's own

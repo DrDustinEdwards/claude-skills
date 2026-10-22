@@ -1,8 +1,7 @@
 {
   "comment": "The files model-refresh may rewrite. Anything not listed here is read for context and never edited. Vendor skills are excluded on purpose: see README, 'Why the vendor skills are not owned'.",
   "owned": [
-    "skills/model-refresh/SKILL.md",
-    "commands/improve.md"
+    "skills/model-refresh/SKILL.md"
   ],
   "vendored": {
     "comment": "Installed from marketplaces or upstream repos. Empty since 2026-10-18: the vendor skills now live in the Claude account, which syncs them to every machine. A skill vendored here again is listed so a refresh run names it as skipped.",

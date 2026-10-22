@@ -6,14 +6,16 @@ import {
   commandWords,
   deleteTargets,
   absolutePath,
-  junctionIn,
-  selfIsNodeModules,
   isForcePush,
   isGitCleanIgnored,
   FORCE_PUSH_DENY,
   GIT_CLEAN_X_DENY,
 } from '../plugins/ops-guards/hooks/lib/guard.mjs';
 import { isHeavy, lockNs, waitMessage } from '../plugins/ops-guards/hooks/lib/heavy.mjs';
+import { findNodeModulesLink } from '../plugins/ops-guards/hooks/junctions.mjs';
+import { mkdtempSync, mkdirSync, symlinkSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 const CWD = 'C:\\Users\\email\\dev\\worktrees\\cs-x';
 
@@ -65,6 +67,7 @@ test('recursive deletes name their targets as absolute paths', () => {
   assert.deepEqual(t('rm -rf ./build ../other/dir'), [`${CWD}\\build`, 'C:\\Users\\email\\dev\\worktrees\\other\\dir']);
   assert.deepEqual(t('Remove-Item -Recurse -Force "C:\\w\\wt"'), ['C:\\w\\wt']);
   assert.deepEqual(t('Remove-Item -Path C:\\w\\wt -Recurse'), ['C:\\w\\wt']);
+  assert.deepEqual(t('Remove-Item -Recurse:$true C:\\w\\wt'), ['C:\\w\\wt']);
   assert.deepEqual(t('rmdir /s /q C:\\w\\wt'), ['C:\\w\\wt']);
   assert.deepEqual(t('git -C C:/main worktree remove C:/w/wt'), ['C:\\w\\wt']);
   assert.deepEqual(t('git worktree remove --force C:/w/wt'), ['C:\\w\\wt']);
@@ -97,14 +100,24 @@ test('absolutePath edge cases', () => {
   assert.equal(absolutePath('C:\\a\\..\\b\\.\\c\\', CWD), 'C:\\b\\c');
 });
 
-test('the junction probe output is read for a node_modules link', () => {
-  assert.equal(junctionIn('C:\\w\\wt\\node_modules\r\nC:\\w\\wt\\other-link\r\n'), 'C:\\w\\wt\\node_modules');
-  assert.equal(junctionIn('C:\\w\\wt\\a\\node_modules\n'), 'C:\\w\\wt\\a\\node_modules');
-  assert.equal(junctionIn('C:\\w\\wt\\node_modules_backup\n'), null);
-  assert.equal(junctionIn(''), null);
-  assert.equal(junctionIn(undefined), null);
-  assert.equal(selfIsNodeModules('C:\\w\\wt\\node_modules'), true);
-  assert.equal(selfIsNodeModules('C:\\w\\wt'), false);
+// A real tree: the probe finds a nested node_modules link, never walks into it, and
+// takes a name with & in it as a file name.
+test('the junction probe finds a node_modules link without following it', () => {
+  const base = mkdtempSync(join(tmpdir(), 'junctions-'));
+  try {
+    const store = join(base, 'store');
+    mkdirSync(join(store, 'node_modules'), { recursive: true });
+    const tree = join(base, 'a & b');
+    mkdirSync(join(tree, 'pkg'), { recursive: true });
+    assert.equal(findNodeModulesLink(tree), null);
+    symlinkSync(join(store, 'node_modules'), join(tree, 'pkg', 'node_modules'), 'junction');
+    assert.equal(findNodeModulesLink(tree), join(tree, 'pkg', 'node_modules'));
+    assert.equal(findNodeModulesLink(join(tree, 'pkg', 'node_modules')), join(tree, 'pkg', 'node_modules'));
+    assert.equal(findNodeModulesLink(store), null, 'a real node_modules folder is not a link');
+    assert.equal(findNodeModulesLink(join(base, 'missing')), null);
+  } finally {
+    rmSync(base, { recursive: true, force: true });
+  }
 });
 
 test('isForcePush ignores non-push verbs', () => {
@@ -137,14 +150,13 @@ test('heavy work is installs and builds, not tests or lint', () => {
     'npx playwright test',
     'npx vitest run',
     'git status',
-    'node scripts/disk-guard.mjs preflight C:/w 20',
     'echo npm ci',
     'npm run buildtools',
     'npm config get cache',
   ];
   for (const c of heavy) assert.equal(isHeavy(c), true, `heavy: ${c}`);
   for (const c of light) assert.equal(isHeavy(c), false, `light: ${c}`);
-  assert.equal(heavy.length + light.length, 25, 'count of commands judged');
+  assert.equal(heavy.length + light.length, 24, 'count of commands judged');
 });
 
 test('lock names and wait messages', () => {
