@@ -8,7 +8,7 @@
 // wrappers are unwrapped one level; an alias, a script file or a variable is not seen.
 
 /** Split a command into segments on ; && || | and newlines, outside quotes. */
-export function segments(command) {
+function segments(command) {
   const out = [];
   let cur = '';
   let quote = null;
@@ -40,7 +40,7 @@ export function segments(command) {
 }
 
 /** Split a segment into words, honouring quotes. Backslashes are literal: Windows paths. */
-export function words(segment) {
+function words(segment) {
   const out = [];
   let cur = '';
   let quote = null;

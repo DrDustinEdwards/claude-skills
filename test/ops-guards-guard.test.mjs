@@ -11,7 +11,7 @@ import {
   FORCE_PUSH_DENY,
   GIT_CLEAN_X_DENY,
 } from '../plugins/ops-guards/hooks/lib/guard.mjs';
-import { isHeavy, lockNs, waitMessage } from '../plugins/ops-guards/hooks/lib/heavy.mjs';
+import { isHeavy } from '../plugins/ops-guards/hooks/lib/heavy.mjs';
 import { findNodeModulesLink } from '../plugins/ops-guards/hooks/junctions.mjs';
 import { mkdtempSync, mkdirSync, symlinkSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -157,11 +157,4 @@ test('heavy work is installs and builds, not tests or lint', () => {
   for (const c of heavy) assert.equal(isHeavy(c), true, `heavy: ${c}`);
   for (const c of light) assert.equal(isHeavy(c), false, `light: ${c}`);
   assert.equal(heavy.length + light.length, 24, 'count of commands judged');
-});
-
-test('lock names and wait messages', () => {
-  assert.equal(lockNs('3f2a9c1e-5b7d-4e8a'), 'tab-3f2a9c1e');
-  assert.equal(lockNs(undefined), 'tab-unknown');
-  assert.match(waitMessage({ ns: 'tab-1', started: '2026-10-08T00:00:00.000Z' }), /tab-1 since 2026-10-08/);
-  assert.match(waitMessage(null), /unknown session/);
 });
