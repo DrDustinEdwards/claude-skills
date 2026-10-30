@@ -146,8 +146,15 @@ The one skill here is locally authored and owned: `model-refresh`. The personal
 and project-specific skills (a workflow skill, `foxing`, `recova`) live in a
 separate private repo and are loaded beside it.
 
-If a vendor skill is ever brought back, list it in `MANIFEST.json` under
-`vendored`. `model-refresh` never edits a listed skill, for a practical reason:
+The exception is Emil Kowalski's design and animation skills (13 of the 16 in
+emilkowalski/skills at a81dbca, MIT, with the LICENSE in each directory), added
+here on 2026-10-30. They are not on the account, so no second copy loads beside
+them. The L1 block was added to each frontmatter; the body is upstream's, unedited.
+Left out: write-swift (no Swift here), ask-sonner (Sonner is not used) and
+pick-ui-library (it recommends Tailwind tooling and outside components, against
+Capsomer's plain-CSS rule).
+
+A vendored skill is listed in `MANIFEST.json` under `vendored`. `model-refresh` never edits a listed skill, for a practical reason:
 the next upstream update overwrites a local edit, so a rewrite there reads as a
 change that took and did not. The validator still checks it and marks it
 vendored, so a clobbered L1 block is loud rather than quiet.

@@ -4,7 +4,21 @@
     "skills/model-refresh/SKILL.md"
   ],
   "vendored": {
-    "comment": "Installed from marketplaces or upstream repos. Empty since 2026-10-18: the vendor skills now live in the Claude account, which syncs them to every machine. A skill vendored here again is listed so a refresh run names it as skipped.",
-    "skills": []
+    "comment": "Installed from upstream repos. Emil Kowalski's design and animation skills (emilkowalski/skills at a81dbca, MIT, LICENSE in each directory), added 2026-10-30. A refresh run names them as skipped.",
+    "skills": [
+      "animate",
+      "animate-expo",
+      "animation-performance",
+      "animation-vocabulary",
+      "apple-design",
+      "break-ui",
+      "emil-design-eng",
+      "find-animation-opportunities",
+      "improve-animations",
+      "mobile-native",
+      "prototype",
+      "remove-animations",
+      "review-animations"
+    ]
   }
 }
