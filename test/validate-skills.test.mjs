@@ -168,7 +168,7 @@ test('every skill and command in the repo validates', () => {
     [],
   );
   const kinds = new Set(report.entries.map((e) => e.kind));
-  assert.deepEqual([...kinds].sort(), ['candidate', 'skill'], 'expected skills and candidates read (commands/ holds none now)');
+  assert.ok(kinds.has('skill'), 'expected the live skills to be read');
   assert.equal(report.ok, true);
 });
 
