@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-03T12:18:18.939Z",
+  "fetched_at": "2026-11-05T03:38:33.041Z",
   "overview_sha256": "5761ef315b5a4816697fbdc7e4a653d3cb439ccfe9a0a012f90a2d326aba90a2",
   "models": {
     "fable-5-1": {
@@ -12,9 +12,9 @@
     "haiku-5-5": {
       "status": 200,
       "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-haiku-5-5.md",
-      "sha256": "ed9c6b78a1080524f38115cd4b12760ffcbcd6e0de2e08b7709c090b8051a2c2",
-      "fetched_at": "2026-11-03T12:18:18.939Z",
-      "changed_at": "2026-11-03T12:18:18.939Z"
+      "sha256": "69d8bf18169f27ac8f14fb7f805495a03e4cd7800de5dcfc527982a9fde9a1bf",
+      "fetched_at": "2026-11-05T03:38:33.041Z",
+      "changed_at": "2026-11-05T03:38:33.041Z"
     },
     "opus-5-5": {
       "status": 200,
@@ -26,9 +26,9 @@
     "sonnet-5-5": {
       "status": 200,
       "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-sonnet-5-5.md",
-      "sha256": "cba13dfa2b9852ea8d9a07c562592e149b0bb75e22551033b03c84528bca5e65",
-      "fetched_at": "2026-11-03T12:18:18.939Z",
-      "changed_at": "2026-11-03T12:18:18.939Z"
+      "sha256": "0826ae2afb34141ee8abda47c9044ec7ecd5f5c6511c1d2516066b20eb6b8d18",
+      "fetched_at": "2026-11-05T03:38:33.041Z",
+      "changed_at": "2026-11-05T03:38:33.041Z"
     }
   }
 }
